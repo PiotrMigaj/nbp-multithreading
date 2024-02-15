@@ -1,7 +1,6 @@
 package pl.migibud.nbp.internal;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.migibud.nbp.api.CurrencyDto;
@@ -14,17 +13,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 
-@Singleton
+@RequiredArgsConstructor
 class CurrencyFacade implements CurrencyProvider {
 
     private static final Logger LOGGER = LogManager.getLogger(CurrencyFacade.class);
     
     private final NbpClient nbpClient;
-
-    @Inject
-    public CurrencyFacade(NbpClient nbpClient) {
-        this.nbpClient = nbpClient;
-    }
 
     @Override
     public List<CurrencyDto> fetchCurrencies() {
