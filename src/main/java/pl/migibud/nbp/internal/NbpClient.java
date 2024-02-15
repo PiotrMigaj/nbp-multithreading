@@ -1,7 +1,8 @@
 package pl.migibud.nbp.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.migibud.nbp.api.CurrencyDto;
@@ -15,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 
-@RequiredArgsConstructor
+@Singleton
 class NbpClient {
     
     private static final String NPB_URI = "https://api.nbp.pl/api/exchangerates/rates/a/%s/?format=json";
@@ -23,7 +24,12 @@ class NbpClient {
     private static final Logger LOGGER = LogManager.getLogger(NbpClient.class);
     
     private final ObjectMapper objectMapper;
-    
+
+    @Inject
+    public NbpClient(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     CurrencyDto downloadCurrency(CurrencyCode currencyCode){
 
         final var httpClient = HttpClient.newHttpClient();
