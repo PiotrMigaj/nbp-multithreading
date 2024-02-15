@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import pl.migibud.nbp.api.CurrencyProvider;
 
 @Configuration(proxyBeanMethods = false)
-public class CurrencyConfiguration {
+class CurrencyConfiguration {
     
     @Bean
     ObjectMapper objectMapper(){
