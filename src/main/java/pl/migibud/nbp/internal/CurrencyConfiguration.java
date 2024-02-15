@@ -8,21 +8,12 @@ import pl.migibud.nbp.api.CurrencyProvider;
 
 @Configuration(proxyBeanMethods = false)
 class CurrencyConfiguration {
-    
+
     @Bean
-    ObjectMapper objectMapper(){
+    CurrencyProvider currencyProvider(){
         final var objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        return objectMapper;
-    }
-    
-    @Bean
-    NbpClient nbpClient(ObjectMapper objectMapper){
-        return new NbpClient(objectMapper);
-    }
-    
-    @Bean
-    CurrencyProvider currencyProvider(NbpClient nbpClient){
-        return new CurrencyFacade(nbpClient);
+        final var npbClient = new NbpClient(objectMapper);
+        return new CurrencyFacade(npbClient);
     }
 }

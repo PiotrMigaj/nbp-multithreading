@@ -23,7 +23,7 @@ class NbpClient {
     private static final Logger LOGGER = LogManager.getLogger(NbpClient.class);
     
     private final ObjectMapper objectMapper;
-
+    
     CurrencyDto downloadCurrency(CurrencyCode currencyCode){
 
         final var httpClient = HttpClient.newHttpClient();
