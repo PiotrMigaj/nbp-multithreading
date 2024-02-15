@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 
 @RequiredArgsConstructor
@@ -33,11 +32,11 @@ class CurrencyFacade implements CurrencyProvider {
     }
 
     @Override
-    public List<CurrencyDto> fetchCurrenciesAsync(Executor executor) {
+    public List<CurrencyDto> fetchCurrenciesAsync() {
         final List<Future<CurrencyDto>> futures = new ArrayList<>();
         final long start = System.currentTimeMillis();
         for (CurrencyCode code :CurrencyCode.values()) {
-            final Future<CurrencyDto> future = nbpClient.downloadCurrencyAsync(code, executor);
+            final Future<CurrencyDto> future = nbpClient.downloadCurrencyAsync(code);
             futures.add(future);
         }
         final List<CurrencyDto> currencies = new ArrayList<>();

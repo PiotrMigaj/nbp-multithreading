@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.scheduling.annotation.Async;
 import pl.migibud.nbp.api.CurrencyDto;
 
 import java.io.IOException;
@@ -12,7 +13,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 
 @RequiredArgsConstructor
@@ -43,7 +43,8 @@ class NbpClient {
         }
     }
     
-    Future<CurrencyDto> downloadCurrencyAsync(CurrencyCode currencyCode, Executor executor){
-        return CompletableFuture.supplyAsync(()->downloadCurrency(currencyCode),executor);
+    @Async("threadPoolTaskExecutor")
+    public Future<CurrencyDto> downloadCurrencyAsync(CurrencyCode currencyCode){
+        return CompletableFuture.supplyAsync(()->downloadCurrency(currencyCode));
     }
 }
